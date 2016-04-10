@@ -1,3 +1,62 @@
-.float-left{
-	float:left;
+
+$calendar-width:500px;
+$calendar-height:650px;
+.calendar { 
+    width: $calendar-width;
+    height: $calendar-height; 
+    margin:0 auto;
+}
+
+$date-height:350px;
+$date-width:300px;
+.calendar-container {
+    height: $date-height;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    margin-top: -$date-height/2;
+    margin-left:-$date-width/2;
+}
+
+.calendar-container,
+.choose,
+.date-show,
+.date-title,
+.date-content {
+    width: $date-width;
+}
+
+$choose-height:50px;
+$date-title-height:50px;
+$date-content-height:250px;
+$date-show-height:$date-content-height+$date-title-height;
+.choose {
+    height: $choose-height;
+    border:1px solid #000;
+}
+
+.date-title {
+    height: $date-title-height;
+    border:1px solid #000;
+}
+
+$date-item-width:$date-width/7;
+$date-item-height:$date-content-height/5;
+.date-title-item,
+.date-content-item {
+    float: left;
+    width: $date-item-width;
+    height: $date-item-height;
+    text-align: center;
+    vertical-align: middle;
+}
+
+.date-content {
+    height: $date-content-height;
+    float: left;
+    border:1px solid #000;
+}
+
+.date-show {
+    height: $date-show-height;
 }
