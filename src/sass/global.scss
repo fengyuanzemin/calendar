@@ -1,62 +1,110 @@
+// 设置复用的阴影
+@mixin shadow{
+	box-shadow: 4px 4px 5px #888888;
+}
 
 $calendar-width:500px;
 $calendar-height:650px;
-.calendar { 
+$calendar-color:#FFFFCC;
+.calendar {
     width: $calendar-width;
-    height: $calendar-height; 
-    margin:0 auto;
+    height: $calendar-height;
+    margin: 0 auto;
+    
 }
 
-$date-height:350px;
-$date-width:300px;
+$date-height:400px;
+$date-width:330px;
 .calendar-container {
+    width: $date-width;
     height: $date-height;
     position: fixed;
     top: 50%;
     left: 50%;
     margin-top: -$date-height/2;
-    margin-left:-$date-width/2;
-}
-
-.calendar-container,
-.choose,
-.date-show,
-.date-title,
-.date-content {
-    width: $date-width;
+    margin-left: -$date-width/2;
+	background-color:$calendar-color;
+	@include shadow;
 }
 
 $choose-height:50px;
 $date-title-height:50px;
-$date-content-height:250px;
+$date-content-height:300px;
+// date-show的高度不用重新定义
 $date-show-height:$date-content-height+$date-title-height;
-.choose {
-    height: $choose-height;
-    border:1px solid #000;
+.date-show {
+    width: $date-width;
+    height: $date-show-height;
 }
 
+.choose {
+    width: $date-width;
+    height: $choose-height;
+    line-height: 3;
+    background-color:#fff;
+    // border: 1px solid #000;
+    // @include shadow;
+}
+
+.year-choose,
+.month-choose {
+    float: left;
+    width: $date-width/2;
+    text-align: center;
+}
+
+.icon-circle-right,
+.icon-circle-left {
+    cursor: pointer;
+}
+
+$year-show-width:82px;
+.month-show,
+.year-show {
+    cursor: pointer;
+    display: inline-block;
+}
+.year-show,
+.month-show{
+	width: $year-show-width;
+}
+// .month-show{
+// 	width:$year-show-width+30px;
+// }
+
 .date-title {
+    width: $date-width;
     height: $date-title-height;
-    border:1px solid #000;
 }
 
 $date-item-width:$date-width/7;
-$date-item-height:$date-content-height/5;
+$date-item-height:$date-content-height/6;
 .date-title-item,
 .date-content-item {
     float: left;
     width: $date-item-width;
     height: $date-item-height;
     text-align: center;
-    vertical-align: middle;
+    line-height: 3;
+    cursor: pointer;
 }
 
 .date-content {
+    width: $date-width;
     height: $date-content-height;
     float: left;
-    border:1px solid #000;
+   	background-color:#fff;
 }
 
-.date-show {
-    height: $date-show-height;
+// 不是本月的日期
+.not-this-month {
+    opacity: 0.65;
+    background-color:#eeeeee;
+}
+
+// 节假日颜色
+$weekend-color:#e02d2d;
+.weekend {
+    color: $weekend-color;
+
 }
