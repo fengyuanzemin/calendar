@@ -22,8 +22,10 @@ console.log("今天是周：" + day);
 console.log("今天日期是：" + todayDate);
 
 // 年，月选择框
+var yearToggle=document.querySelector("#year-show");
 var yearShow = document.querySelector("#year-show .this-change");
 var yearHiddenChoose = document.querySelector("#year-hidden-choose");
+var monthToggle=document.querySelector("#month-show");
 var monthShow = document.querySelector("#month-show .this-change");
 var monthHiddenChoose = document.querySelector("#month-hidden-choose");
 
@@ -33,11 +35,23 @@ console.log(monthShow);
 console.log(monthHiddenChoose);
 
 
-yearShow.addEventListener('click', function() {
-    console.log('事件为：yearShowClick');
+yearToggle.addEventListener('click', function() {
+    console.log('事件为：yearToggleClick');
+    if(document.querySelector(".year-hidden-choose").style.display=='none'){
+        document.querySelector(".year-hidden-choose").style.display='block';
+    }
+    else if(document.querySelector(".year-hidden-choose").style.display=='block'){
+        document.querySelector(".year-hidden-choose").style.display='none';
+    }
 });
-monthShow.addEventListener('click', function() {
-    console.log('事件为：monthShowClick');
+monthToggle.addEventListener('click', function() {
+    console.log('事件为：monthToggleClick');
+    if(document.querySelector(".month-hidden-choose").style.display=='none'){
+        document.querySelector(".month-hidden-choose").style.display='block';
+    }
+    else if(document.querySelector(".month-hidden-choose").style.display=='block'){
+        document.querySelector(".month-hidden-choose").style.display='none';
+    }
 });
 
 // 上下年月

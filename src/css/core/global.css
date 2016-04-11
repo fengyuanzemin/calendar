@@ -24,20 +24,37 @@
   line-height: 3;
   background-color: #fff; }
 
+.choose-show {
+  cursor: pointer;
+  display: inline-block;
+  width: 82px; }
+
 .year-choose,
 .month-choose {
   float: left;
   width: 165px;
   text-align: center; }
 
+.year-hidden-choose,
+.month-hidden-choose {
+  position: absolute;
+  height: 200px;
+  width: 82px;
+  overflow: scroll;
+  opacity: 0.99;
+  z-index: 999;
+  display: none;
+  background-color: #fff; }
+
+.year-hidden-choose {
+  left: 40px; }
+
+.month-hidden-choose {
+  left: 204px; }
+
 .icon-circle-right,
 .icon-circle-left {
   cursor: pointer; }
-
-.choose-show {
-  cursor: pointer;
-  display: inline-block;
-  width: 82px; }
 
 .date-title {
   width: 330px;
