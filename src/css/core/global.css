@@ -34,13 +34,9 @@
 .icon-circle-left {
   cursor: pointer; }
 
-.month-show,
-.year-show {
+.choose-show {
   cursor: pointer;
-  display: inline-block; }
-
-.year-show,
-.month-show {
+  display: inline-block;
   width: 82px; }
 
 .date-title {
@@ -63,7 +59,7 @@
   background-color: #fff; }
 
 .not-this-month {
-  opacity: 0.65;
+  opacity: 0.6;
   background-color: #eeeeee; }
 
 .weekend {

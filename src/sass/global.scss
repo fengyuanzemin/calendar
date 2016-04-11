@@ -59,18 +59,11 @@ $date-show-height:$date-content-height+$date-title-height;
 }
 
 $year-show-width:82px;
-.month-show,
-.year-show {
+.choose-show{
     cursor: pointer;
     display: inline-block;
-}
-.year-show,
-.month-show{
 	width: $year-show-width;
 }
-// .month-show{
-// 	width:$year-show-width+30px;
-// }
 
 .date-title {
     width: $date-width;
@@ -98,7 +91,7 @@ $date-item-height:$date-content-height/6;
 
 // 不是本月的日期
 .not-this-month {
-    opacity: 0.65;
+    opacity: 0.6;
     background-color:#eeeeee;
 }
 
