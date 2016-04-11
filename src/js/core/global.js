@@ -15,16 +15,16 @@ var date = today.getDate();
 var day = weekStringZH_CNThree[today.getDay()];
 var todayDate = fullYear + "年" + month + "月" + date + "日" + day;
 
-console.log("当前年份是：" + fullYear);
-console.log("当前月份是：" + month);
-console.log("当前日子是：" + date);
-console.log("当前是周：" + day);
-console.log("当前日期是：" + todayDate);
+console.log("今天年份是：" + fullYear);
+console.log("今天月份是：" + month);
+console.log("今天日子是：" + date);
+console.log("今天是周：" + day);
+console.log("今天日期是：" + todayDate);
 
 // 年，月选择框
-var yearShow = document.querySelector("#year-show");
+var yearShow = document.querySelector("#year-show .this-change");
 var yearHiddenChoose = document.querySelector("#year-hidden-choose");
-var monthShow = document.querySelector("#month-show");
+var monthShow = document.querySelector("#month-show .this-change");
 var monthHiddenChoose = document.querySelector("#month-hidden-choose");
 
 console.log(yearShow);
@@ -38,7 +38,7 @@ yearShow.addEventListener('click', function() {
 });
 monthShow.addEventListener('click', function() {
     console.log('事件为：monthShowClick');
-})
+});
 
 // 上下年月
 var yearChooseLeft = document.querySelector(".year-choose .icon-circle-left");
@@ -55,58 +55,72 @@ console.log(monthChooseRight);
 yearChooseLeft.addEventListener('click', function() {
     console.log('事件为：yearChooseLeftClick');
     // textContent不支持IE678
-    var thisYear = yearShow.textContent.substring(0, 4);
-    console.log('今年是：'+thisYear);
-    return getPreYear(thisYear);
+    var thisYear = yearShow.textContent;
+    console.log('今年是：' + thisYear);
+    yearShow.textContent = getPreYear(thisYear);
 
 });
 yearChooseRight.addEventListener('click', function() {
     console.log('事件为：yearChooseRightClick');
-    var thisYear = yearShow.textContent.substring(0, 4);
-    console.log(thisYear);
+    var thisYear = yearShow.textContent;
+    console.log('这一年是：' + thisYear);
+    yearShow.textContent = getNextYear(thisYear);
 });
 monthChooseLeft.addEventListener('click', function() {
     console.log('事件为：monthChooseLeftClick');
-    var thisMonth = monthShow.textContent.substring(0, 1);
-    console.log(thisMonth);
+    var thisYear = yearShow.textContent;
+    var thisMonth = monthShow.textContent;
+    console.log('这一年是：' + thisYear);
+    console.log('这一月是：' + thisMonth);
+    monthShow.textContent = getPreMonth(thisYear, thisMonth);
 });
 monthChooseRight.addEventListener('click', function() {
     console.log('事件为：monthChooseRightClick');
-    var thisMonth = monthShow.textContent.substring(0, 1);
-    console.log(thisMonth);
+    var thisYear = yearShow.textContent;
+    var thisMonth = monthShow.textContent;
+    console.log('这一年是：' + thisYear);
+    console.log('这一月是：' + thisMonth);
+    monthShow.textContent = getNextMonth(thisYear, thisMonth);
 });
 // 生成当前月份
 
-// 全局函数-取得前一年/月的时间串
+// 全局函数-取得前一年的时间串
 
 function getPreYear(year) {
-	console.log('传入参数为:'+year);
-    var thisYear = new Date(year);
+    console.log('传入参数为:' + year);
+    var thisYear = new Date(year, 5);
     var preYear = new Date(thisYear.valueOf() - 24 * 60 * 60 * 1000 * 365);
-    console.log('上一年是'+preYear.getFullYear());
+    console.log('上一年是' + preYear.getFullYear());
     return preYear.getFullYear();
 }
 
-// 全局函数-取得后一年/月的时间串
+// 全局函数-取得后一年的时间串
 
-function getNextDate(date) {
-    var s = date.split('-'),
-        year = parseInt(s[0]),
-        month = parseInt(s[1]) - 1,
-        day = parseInt(s[2]);
-    var nextDayString;
-    if (day && month && year) {
-        var today = new Date(year, month, day);
-        var nextDay = new Date(today.valueOf() + 24 * 60 * 60 * 1000);
-        var n_day = nextDay.getDate(),
-            n_month = nextDay.getMonth() + 1;
-        if (n_day < 10) {
-            n_day = "0" + n_day;
-        }
-        if (n_month < 10) {
-            n_month = "0" + n_month;
-        }
-        nextDayString = nextDay.getFullYear() + '-' + n_month + '-' + n_day;
-    }
-    return nextDayString;
+function getNextYear(year) {
+    console.log('传入参数为:' + year);
+    var thisYear = new Date(year, 5);
+    var nextYear = new Date(thisYear.valueOf() + 24 * 60 * 60 * 1000 * 365);
+    console.log('下一年是' + nextYear.getFullYear());
+    return nextYear.getFullYear();
+}
+
+// 全局函数-取得前一月的时间串
+function getPreMonth(year, month) {
+    console.log('传入参数年为:' + year);
+    console.log('传入参数月为:' + month);
+    month = month - 1;
+    var thisMonth = new Date(year, month, 15);
+    var preMonth = new Date(thisMonth.valueOf() - 24 * 60 * 60 * 1000 * 30);
+    console.log('上一月是' + preMonth.getMonth());
+    return preMonth.getMonth() + 1;
+}
+// 全局函数-取得后一月的时间串
+function getNextMonth(year, month) {
+    console.log('传入参数年为:' + year);
+    console.log('传入参数月为:' + month);
+    month = month - 1;
+    var thisMonth = new Date(year, month, 15);
+    var nextMonth = new Date(thisMonth.valueOf() + 24 * 60 * 60 * 1000 * 30);
+    console.log('下一月是' + nextMonth.getMonth());
+    return nextMonth.getMonth() + 1;
 }

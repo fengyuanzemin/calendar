@@ -1,0 +1,1 @@
+console.log("当前年份是："+fullYear),console.log("当前月份是："+month),console.log("当前日子是："+date),console.log("当前是周："+day),console.log("当前日期是："+todayDate),console.log(yearShow),console.log(monthShow),console.log(yearChooseLeft),console.log(yearChooseRight),console.log(monthChooseLeft),console.log(monthChooseRight);
