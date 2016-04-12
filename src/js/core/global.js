@@ -27,11 +27,21 @@ var monthHiddenChoose = document.querySelector(".month-hidden-choose");
 
 // 上下年月
 
-document.querySelector(".calendar").addEventListener('click', function(event) {
+document.querySelector(".container").addEventListener('click', function(event) {
     event = event ? event : window.event;
     var target = event.target || event.srcElement;
     console.log(target.className);
     var thisYear,thisMonth;
+    if(target.className!='icon-sort-desc year-icon'&&target.className!='this-change year-change'&&
+            target.className!='year-choose-show'&&target.className!='year-hidden-choose'&&
+            target.className!='year-choose-item'){
+        yearHiddenChoose.style.display = 'none';
+    }
+    if(target.className!='icon-sort-desc month-icon'&&target.className!='this-change month-change'&&
+            target.className!='month-choose-show'&&target.className!='month-hidden-choose'&&
+            target.className!='month-choose-item'){
+        monthHiddenChoose.style.display = 'none';
+    }
     switch (target.className) {
 
         // 年选择框的点击
