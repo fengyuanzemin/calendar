@@ -15,87 +15,76 @@ var date = today.getDate();
 var day = weekStringZH_CNThree[today.getDay()];
 var todayDate = fullYear + "年" + month + "月" + date + "日" + day;
 
-console.log("今天年份是：" + fullYear);
-console.log("今天月份是：" + month);
-console.log("今天日子是：" + date);
-console.log("今天是周：" + day);
 console.log("今天日期是：" + todayDate);
 
 // 年，月选择框
-var yearToggle=document.querySelector("#year-show");
+var yearToggle = document.querySelector("#year-show");
 var yearShow = document.querySelector("#year-show .this-change");
-var yearHiddenChoose = document.querySelector("#year-hidden-choose");
-var monthToggle=document.querySelector("#month-show");
+var yearHiddenChoose = document.querySelector(".year-hidden-choose");
+var monthToggle = document.querySelector("#month-show");
 var monthShow = document.querySelector("#month-show .this-change");
-var monthHiddenChoose = document.querySelector("#month-hidden-choose");
-
-console.log(yearShow);
-console.log(yearHiddenChoose);
-console.log(monthShow);
-console.log(monthHiddenChoose);
-
-
-yearToggle.addEventListener('click', function() {
-    console.log('事件为：yearToggleClick');
-    if(document.querySelector(".year-hidden-choose").style.display=='none'){
-        document.querySelector(".year-hidden-choose").style.display='block';
-    }
-    else if(document.querySelector(".year-hidden-choose").style.display=='block'){
-        document.querySelector(".year-hidden-choose").style.display='none';
-    }
-});
-monthToggle.addEventListener('click', function() {
-    console.log('事件为：monthToggleClick');
-    if(document.querySelector(".month-hidden-choose").style.display=='none'){
-        document.querySelector(".month-hidden-choose").style.display='block';
-    }
-    else if(document.querySelector(".month-hidden-choose").style.display=='block'){
-        document.querySelector(".month-hidden-choose").style.display='none';
-    }
-});
+var monthHiddenChoose = document.querySelector(".month-hidden-choose");
 
 // 上下年月
-var yearChooseLeft = document.querySelector(".year-choose .icon-circle-left");
-var yearChooseRight = document.querySelector(".year-choose .icon-circle-right");
 
-var monthChooseLeft = document.querySelector(".month-choose .icon-circle-left");
-var monthChooseRight = document.querySelector(".month-choose .icon-circle-right");
+document.querySelector(".calendar").addEventListener('click', function(event) {
+    event = event ? event : window.event;
+    var target = event.target || event.srcElement;
+    console.log(target.className);
+    var thisYear,thisMonth;
+    switch (target.className) {
 
-console.log(yearChooseLeft);
-console.log(yearChooseRight);
-console.log(monthChooseLeft);
-console.log(monthChooseRight);
+        // 年选择框的点击
+        case 'icon-sort-desc year-icon':
+        case 'this-change year-change':
+        case 'year-choose-show':
+            if (yearHiddenChoose.style.display == 'none') {
+                yearHiddenChoose.style.display = 'block';
+            } else if (yearHiddenChoose.style.display == 'block') {
+                yearHiddenChoose.style.display = 'none';
+            }
+            break;
 
-yearChooseLeft.addEventListener('click', function() {
-    console.log('事件为：yearChooseLeftClick');
-    // textContent不支持IE678
-    var thisYear = yearShow.textContent;
-    console.log('今年是：' + thisYear);
-    yearShow.textContent = getPreYear(thisYear);
+            // 月选择框的点击
+        case 'icon-sort-desc month-icon':
+        case 'this-change month-change':
+        case 'month-choose-show':
+            if (monthHiddenChoose.style.display == 'none') {
+                monthHiddenChoose.style.display = 'block';
+            } else if (monthHiddenChoose.style.display == 'block') {
+                monthHiddenChoose.style.display = 'none';
+            }
+            break;
 
+            // 上一年
+        case 'icon-circle-left year-icon':
+            // textContent不支持IE678
+            thisYear = yearShow.textContent;
+            yearShow.textContent = getPreYear(thisYear);
+            break;
+            // 下一年
+        case 'icon-circle-right year-icon':
+            thisYear = yearShow.textContent;
+            yearShow.textContent = getNextYear(thisYear);
+            break;
+            // 上一月
+        case 'icon-circle-left month-icon':
+            thisYear = yearShow.textContent;
+            thisMonth = monthShow.textContent;
+            monthShow.textContent = getPreMonth(thisYear, thisMonth);
+            break;
+            // 下一月
+        case 'icon-circle-right month-icon':
+            thisYear = yearShow.textContent;
+            thisMonth = monthShow.textContent;
+            monthShow.textContent = getNextMonth(thisYear, thisMonth);
+            break;
+        default:
+            break;
+    }
 });
-yearChooseRight.addEventListener('click', function() {
-    console.log('事件为：yearChooseRightClick');
-    var thisYear = yearShow.textContent;
-    console.log('这一年是：' + thisYear);
-    yearShow.textContent = getNextYear(thisYear);
-});
-monthChooseLeft.addEventListener('click', function() {
-    console.log('事件为：monthChooseLeftClick');
-    var thisYear = yearShow.textContent;
-    var thisMonth = monthShow.textContent;
-    console.log('这一年是：' + thisYear);
-    console.log('这一月是：' + thisMonth);
-    monthShow.textContent = getPreMonth(thisYear, thisMonth);
-});
-monthChooseRight.addEventListener('click', function() {
-    console.log('事件为：monthChooseRightClick');
-    var thisYear = yearShow.textContent;
-    var thisMonth = monthShow.textContent;
-    console.log('这一年是：' + thisYear);
-    console.log('这一月是：' + thisMonth);
-    monthShow.textContent = getNextMonth(thisYear, thisMonth);
-});
+
+
 // 生成当前月份
 
 // 全局函数-取得前一年的时间串
@@ -111,30 +100,22 @@ function getPreYear(year) {
 // 全局函数-取得后一年的时间串
 
 function getNextYear(year) {
-    console.log('传入参数为:' + year);
     var thisYear = new Date(year, 5);
     var nextYear = new Date(thisYear.valueOf() + 24 * 60 * 60 * 1000 * 365);
-    console.log('下一年是' + nextYear.getFullYear());
     return nextYear.getFullYear();
 }
 
 // 全局函数-取得前一月的时间串
 function getPreMonth(year, month) {
-    console.log('传入参数年为:' + year);
-    console.log('传入参数月为:' + month);
     month = month - 1;
     var thisMonth = new Date(year, month, 15);
     var preMonth = new Date(thisMonth.valueOf() - 24 * 60 * 60 * 1000 * 30);
-    console.log('上一月是' + preMonth.getMonth());
     return preMonth.getMonth() + 1;
 }
 // 全局函数-取得后一月的时间串
 function getNextMonth(year, month) {
-    console.log('传入参数年为:' + year);
-    console.log('传入参数月为:' + month);
     month = month - 1;
     var thisMonth = new Date(year, month, 15);
     var nextMonth = new Date(thisMonth.valueOf() + 24 * 60 * 60 * 1000 * 30);
-    console.log('下一月是' + nextMonth.getMonth());
     return nextMonth.getMonth() + 1;
 }

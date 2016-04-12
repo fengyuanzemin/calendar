@@ -46,7 +46,8 @@ $date-show-height:$date-content-height+$date-title-height;
 }
 
 $year-show-width:82px;
-.choose-show {
+.year-choose-show,
+.month-choose-show {
     cursor: pointer;
     display: inline-block;
     width: $year-show-width;
