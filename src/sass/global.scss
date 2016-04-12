@@ -70,14 +70,15 @@ $hidden-choose-item-height:200px;
     z-index: 999;
     display: none;
     background-color: #fff;
+    @include shadow;
 }
 
 .year-hidden-choose {
-    left: 40px;
+    left: 32px;
 }
 
 .month-hidden-choose {
-    left: 204px;
+    left: 198px;
 }
 
 .icon-circle-right,

@@ -44,13 +44,14 @@
   opacity: 0.99;
   z-index: 999;
   display: none;
-  background-color: #fff; }
+  background-color: #fff;
+  box-shadow: 4px 4px 5px #888888; }
 
 .year-hidden-choose {
-  left: 40px; }
+  left: 32px; }
 
 .month-hidden-choose {
-  left: 204px; }
+  left: 198px; }
 
 .icon-circle-right,
 .icon-circle-left {
