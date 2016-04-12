@@ -25,21 +25,20 @@ var monthToggle = document.querySelector("#month-show");
 var monthShow = document.querySelector("#month-show .this-change");
 var monthHiddenChoose = document.querySelector(".month-hidden-choose");
 
-// 上下年月
 
 document.querySelector(".container").addEventListener('click', function(event) {
     event = event ? event : window.event;
     var target = event.target || event.srcElement;
     console.log(target.className);
-    var thisYear,thisMonth;
-    if(target.className!='icon-sort-desc year-icon'&&target.className!='this-change year-change'&&
-            target.className!='year-choose-show'&&target.className!='year-hidden-choose'&&
-            target.className!='year-choose-item'){
+    var thisYear, thisMonth;
+    if (target.className != 'icon-sort-desc year-icon' && target.className != 'this-change year-change' &&
+        target.className != 'year-choose-show' && target.className != 'year-hidden-choose' &&
+        target.className != 'year-choose-item') {
         yearHiddenChoose.style.display = 'none';
     }
-    if(target.className!='icon-sort-desc month-icon'&&target.className!='this-change month-change'&&
-            target.className!='month-choose-show'&&target.className!='month-hidden-choose'&&
-            target.className!='month-choose-item'){
+    if (target.className != 'icon-sort-desc month-icon' && target.className != 'this-change month-change' &&
+        target.className != 'month-choose-show' && target.className != 'month-hidden-choose' &&
+        target.className != 'month-choose-item') {
         monthHiddenChoose.style.display = 'none';
     }
     switch (target.className) {
@@ -89,6 +88,16 @@ document.querySelector(".container").addEventListener('click', function(event) {
             thisMonth = monthShow.textContent;
             monthShow.textContent = getNextMonth(thisYear, thisMonth);
             break;
+            // 点击年选择框，完成选择
+        case 'year-choose-item':
+            yearShow.textContent = target.textContent.replace(/[^0-9]/ig, "");
+            yearHiddenChoose.style.display = 'none';
+            break;
+            // 点击月选择框，完成选择
+        case 'month-choose-item':
+            monthShow.textContent = target.textContent.replace(/[^0-9]/ig, "");
+            monthHiddenChoose.style.display = 'none';
+            break;
         default:
             break;
     }
@@ -100,10 +109,8 @@ document.querySelector(".container").addEventListener('click', function(event) {
 // 全局函数-取得前一年的时间串
 
 function getPreYear(year) {
-    console.log('传入参数为:' + year);
     var thisYear = new Date(year, 5);
     var preYear = new Date(thisYear.valueOf() - 24 * 60 * 60 * 1000 * 365);
-    console.log('上一年是' + preYear.getFullYear());
     return preYear.getFullYear();
 }
 
