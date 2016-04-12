@@ -25,6 +25,8 @@ var monthToggle = document.querySelector("#month-show");
 var monthShow = document.querySelector("#month-show .this-change");
 var monthHiddenChoose = document.querySelector(".month-hidden-choose");
 
+var dateContent = document.querySelector(".date-content");
+
 
 document.querySelector(".container").addEventListener('click', function(event) {
     event = event ? event : window.event;
@@ -104,7 +106,30 @@ document.querySelector(".container").addEventListener('click', function(event) {
 });
 
 
+
+// 监听年、月select的change事件
+getDateContent(2016, 4);
 // 生成当前月份
+function getDateContent(year, month) {
+    var i,j;
+    var dayChosen = new Date(year, month - 1, 1);
+    var weekIndex = dayChosen.getDay();
+    console.log(weekIndex);
+
+    var dayChosenBefore = new Date(dayChosen.valueOf() - 24 * 60 * 60 * 1000 * weekIndex);
+    // var dayChosenBefore
+    console.log(dayChosenBefore.getDate());
+    // 删除子节点
+    // for (i = dateContent.childNodes.length - 1; i > 0; i--) {
+    // dateContent.removeChild(dateContent.childNodes[i])
+    // }
+    // 重新生成子节点
+    // for(j=0;j<weekIndex)
+    var newDateContentItem = document.createElement('li');
+    newDateContentItem.innerHTML = "5";
+    newDateContentItem.className = "date-content-item";
+    dateContent.appendChild(newDateContentItem);
+}
 
 // 全局函数-取得前一年的时间串
 
