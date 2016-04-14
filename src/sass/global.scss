@@ -41,8 +41,6 @@ $date-show-height:$date-content-height+$date-title-height;
     height: $choose-height;
     line-height: 3;
     background-color: #fff;
-    // border: 1px solid #000;
-    // @include shadow;
 }
 
 $year-show-width:82px;
@@ -60,7 +58,7 @@ $year-show-width:82px;
     text-align: center;
 }
 
-$hidden-choose-item-height:200px;
+$hidden-choose-item-height:217px;
 .year-hidden-choose,
 .month-hidden-choose {
     position: absolute;

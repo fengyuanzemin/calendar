@@ -72,56 +72,73 @@ document.querySelector(".container").addEventListener('click', function(event) {
             // textContent不支持IE678
             thisYear = yearShow.textContent;
             yearShow.textContent = getPreYear(thisYear);
+            // setTimeout(getDateContent(yearShow.textContent, monthShow.textContent), 100);
             break;
             // 下一年
         case 'icon-circle-right year-icon':
             thisYear = yearShow.textContent;
             yearShow.textContent = getNextYear(thisYear);
+            // setTimeout(getDateContent(yearShow.textContent, monthShow.textContent), 100);
             break;
             // 上一月
         case 'icon-circle-left month-icon':
             thisYear = yearShow.textContent;
             thisMonth = monthShow.textContent;
             monthShow.textContent = getPreMonth(thisYear, thisMonth);
+            // setTimeout(getDateContent(yearShow.textContent, monthShow.textContent), 100);
             break;
             // 下一月
         case 'icon-circle-right month-icon':
             thisYear = yearShow.textContent;
             thisMonth = monthShow.textContent;
             monthShow.textContent = getNextMonth(thisYear, thisMonth);
+            // setTimeout(getDateContent(yearShow.textContent, monthShow.textContent), 100);
             break;
             // 点击年选择框，完成选择
         case 'year-choose-item':
             yearShow.textContent = target.textContent.replace(/[^0-9]/ig, "");
             yearHiddenChoose.style.display = 'none';
+            // setTimeout(getDateContent(yearShow.textContent, monthShow.textContent), 100);
             break;
             // 点击月选择框，完成选择
         case 'month-choose-item':
             monthShow.textContent = target.textContent.replace(/[^0-9]/ig, "");
             monthHiddenChoose.style.display = 'none';
+            // setTimeout(getDateContent(yearShow.textContent, monthShow.textContent), 100);
+            break;
+        default:
+            break;
+    }
+    switch (target.className) {
+        // 上一年
+        case 'icon-circle-left year-icon':
+            // 下一年
+        case 'icon-circle-right year-icon':
+            // 上一月
+        case 'icon-circle-left month-icon':
+            // 下一月
+        case 'icon-circle-right month-icon':
+            // 点击年选择框，完成选择
+        case 'year-choose-item':
+            // 点击月选择框，完成选择
+        case 'month-choose-item':
+            getDateContent(yearShow.textContent, monthShow.textContent);
             break;
         default:
             break;
     }
 });
 
-
-
-// 监听年、月select的change事件
-getDateContent(2016, 4);
 // 生成当前月份
 function getDateContent(year, month) {
-    var i, j;
+    var j;
     var dayChosen = new Date(year, month - 1, 1);
     var weekIndex = dayChosen.getDay();
-    console.log(weekIndex);
 
     var dayChosenBefore = new Date(dayChosen.valueOf() - 24 * 60 * 60 * 1000 * weekIndex);
-    // var dayChosenBefore
-    console.log(dayChosenBefore.getDate());
     // 删除子节点
     for (i = dateContent.childNodes.length - 1; i > 0; i--) {
-        dateContent.removeChild(dateContent.childNodes[i])
+        dateContent.removeChild(dateContent.childNodes[i]);
     }
     var newDateContentItem;
     var dayTemp = new Date(dayChosenBefore.valueOf());
@@ -129,7 +146,11 @@ function getDateContent(year, month) {
     for (j = 0; j < weekIndex; j++) {
         newDateContentItem = document.createElement('li');
         newDateContentItem.innerHTML = dayTemp.getDate();
-        newDateContentItem.className = "date-content-item";
+        if (dayTemp.getDay() === 0 || dayTemp.getDay() === 6) {
+            newDateContentItem.className = "date-content-item not-this-month weekend";
+        } else {
+            newDateContentItem.className = "date-content-item not-this-month";
+        }
         dateContent.appendChild(newDateContentItem);
         dayTemp = new Date(dayTemp.valueOf() + 24 * 60 * 60 * 1000);
     }
@@ -143,12 +164,15 @@ function getDateContent(year, month) {
         dayTemp = new Date(dayTemp.valueOf() + 24 * 60 * 60 * 1000);
     }
     // 重新生成子节点 下月
-    dayTemp=new Date(dayChosen.valueOf()+24 * 60 * 60 * 1000*getMonthDate(year,month));
-    console.log(dayTemp.getDay());
-    for (j = 0; j < 42-weekIndex-getMonthDate(year, month); j++) {
+    dayTemp = new Date(dayChosen.valueOf() + 24 * 60 * 60 * 1000 * getMonthDate(year, month));
+    for (j = 0; j < 42 - weekIndex - getMonthDate(year, month); j++) {
         newDateContentItem = document.createElement('li');
         newDateContentItem.innerHTML = dayTemp.getDate();
-        newDateContentItem.className = "date-content-item";
+        if (dayTemp.getDay() === 0 || dayTemp.getDay() === 6) {
+            newDateContentItem.className = "date-content-item not-this-month weekend";
+        } else {
+            newDateContentItem.className = "date-content-item not-this-month";
+        }
         dateContent.appendChild(newDateContentItem);
         dayTemp = new Date(dayTemp.valueOf() + 24 * 60 * 60 * 1000);
     }
@@ -189,24 +213,21 @@ function getNextMonth(year, month) {
 // 全局函数 判断一个月有几天
 function getMonthDate(year, month) {
     switch (month) {
-        case 1:
-        case 3:
-        case 5:
-        case 7:
-        case 8:
-        case 10:
-        case 12:
+        case '1':
+        case '3':
+        case '5':
+        case '7':
+        case '8':
+        case '10':
+        case '12':
             return 31;
-            break;
-        case 2:
-        case 4:
-        case 6:
-        case 9:
-        case 11:
+        case '4':
+        case '6':
+        case '9':
+        case '11':
             return 30;
-            break;
-        case 2:
-            if (year % 400 == 0 || year % 4 == 0 && year % 100 != 0) {
+        case '2':
+            if (year % 400 === 0 || year % 4 === 0 && year % 100 !== 0) {
                 return 29;
             } else {
                 return 28;
@@ -215,6 +236,5 @@ function getMonthDate(year, month) {
         default:
             console.log('月份错误');
             break;
-
     }
 }
