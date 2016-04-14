@@ -1,21 +1,159 @@
-// 定义的一些中文字符、术语
-var weekStringZH_CNThree = ['星期日', '星期一', '星期二', '星期三', '星期四', '星期五', '星期六'];
-var weekStringZH_CNTwo = ['周日', '周一', '周二', '周三', '周四', '周五', '周六'];
-// 农历
-var lunarString = ['初一', '初二', '初三', '初四', '初五', '初六', '初七', '初八', '初九', '初十',
-    '十一', '十二', '十三', '十四', '十五', '十六', '十七', '十八', '十九', '二十', '廿一',
-    '廿二', '廿三', '廿四', '廿五', '廿六', '廿七', '廿八', '廿九', '三十'
-];
+var calendar = {
+    // 定义的一些中文字符、术语
+    weekStringZH_CNThree: ['星期日', '星期一', '星期二', '星期三', '星期四', '星期五', '星期六'],
+    weekStringZH_CNTwo: ['周日', '周一', '周二', '周三', '周四', '周五', '周六'],
+    // 农历
+    lunarString: ['初一', '初二', '初三', '初四', '初五', '初六', '初七', '初八', '初九', '初十',
+        '十一', '十二', '十三', '十四', '十五', '十六', '十七', '十八', '十九', '二十', '廿一',
+        '廿二', '廿三', '廿四', '廿五', '廿六', '廿七', '廿八', '廿九', '三十'
+    ],
+    // 天干
+    heavenlyStems:["甲","乙","丙","丁","戊","己","庚","辛","壬","癸"],
+    //地支
+    earthlyBranches:["子","丑","寅","卯","辰","巳","午","未","申","酉","戌","亥"],
+    // 生肖表
+    animals:["鼠","牛","虎","兔","龙","蛇","马","羊","猴","鸡","狗","猪"],
+    // 24节气
+    solarTerms:["小寒","大寒","立春","雨水","惊蛰","春分","清明","谷雨","立夏","小满",
+        "芒种","夏至","小暑","大暑","立秋","处暑","白露","秋分","寒露","霜降","立冬","小雪","大雪","冬至"],
+    // 获取当前时间
+    getDate: function() {
+        var today = new Date();
+        var fullYear = today.getFullYear();
+        var month = today.getMonth() + 1;
+        var date = today.getDate();
+        var day = this.weekStringZH_CNThree[today.getDay()];
+        var todayDate = fullYear + "年" + month + "月" + date + "日" + day;
+        console.log("今天日期是：" + todayDate);
+    },
 
-// 获取当前时间
-var today = new Date();
-var fullYear = today.getFullYear();
-var month = today.getMonth() + 1;
-var date = today.getDate();
-var day = weekStringZH_CNThree[today.getDay()];
-var todayDate = fullYear + "年" + month + "月" + date + "日" + day;
+    // 生成当前月份
+    getDateContent: function(year, month) {
+        var j;
+        var dayChosen = new Date(year, month - 1, 1);
+        var weekIndex = dayChosen.getDay();
 
-console.log("今天日期是：" + todayDate);
+        var dayChosenBefore = new Date(dayChosen.valueOf() - 24 * 60 * 60 * 1000 * weekIndex);
+        // 删除子节点
+        for (i = dateContent.childNodes.length - 1; i > 0; i--) {
+            dateContent.removeChild(dateContent.childNodes[i]);
+        }
+        var newDateContentItem, newDateContentItemNum;
+        var dayTemp = new Date(dayChosenBefore.valueOf());
+        // 重新生成子节点 上一月
+        for (j = 0; j < weekIndex; j++) {
+            // 先创建 li
+            newDateContentItem = document.createElement('li');
+            newDateContentItem.className = "date-content-item not-this-month";
+            dateContent.appendChild(newDateContentItem);
+            // 再创建 p
+            newDateContentItemNum = document.createElement('p');
+            if (dayTemp.getDay() === 0 || dayTemp.getDay() === 6) {
+                newDateContentItemNum.className = "num weekend";
+            } else {
+                newDateContentItemNum.className = "num";
+            }
+            newDateContentItemNum.textContent = dayTemp.getDate();
+            newDateContentItem.appendChild(newDateContentItemNum);
+            dayTemp = new Date(dayTemp.valueOf() + 24 * 60 * 60 * 1000);
+        }
+        // 重新生成子节点 本月
+        dayTemp = new Date(dayChosen.valueOf());
+        for (j = 0; j < calendar.getMonthDate(year, month); j++) {
+            newDateContentItem = document.createElement('li');
+            newDateContentItem.className = "date-content-item";
+            dateContent.appendChild(newDateContentItem);
+
+            newDateContentItemNum = document.createElement('p');
+            if (dayTemp.getDay() === 0 || dayTemp.getDay() === 6) {
+                newDateContentItemNum.className = "num weekend";
+            } else {
+                newDateContentItemNum.className = "num";
+            }
+            newDateContentItemNum.textContent = dayTemp.getDate();
+            newDateContentItem.appendChild(newDateContentItemNum);
+
+            dayTemp = new Date(dayTemp.valueOf() + 24 * 60 * 60 * 1000);
+        }
+        // 重新生成子节点 下月
+        dayTemp = new Date(dayChosen.valueOf() + 24 * 60 * 60 * 1000 * calendar.getMonthDate(year, month));
+        for (j = 0; j < 42 - weekIndex - calendar.getMonthDate(year, month); j++) {
+            newDateContentItem = document.createElement('li');
+            newDateContentItem.className = "date-content-item not-this-month";
+            dateContent.appendChild(newDateContentItem);
+
+            newDateContentItemNum = document.createElement('p');
+            if (dayTemp.getDay() === 0 || dayTemp.getDay() === 6) {
+                newDateContentItemNum.className = "num weekend";
+            } else {
+                newDateContentItemNum.className = "num";
+            }
+            newDateContentItemNum.textContent = dayTemp.getDate();
+            newDateContentItem.appendChild(newDateContentItemNum);
+            dayTemp = new Date(dayTemp.valueOf() + 24 * 60 * 60 * 1000);
+        }
+
+
+    },
+
+    // 取得前一年的时间串
+    getPreYear: function(year) {
+        var thisYear = new Date(year, 5);
+        var preYear = new Date(thisYear.valueOf() - 24 * 60 * 60 * 1000 * 365);
+        return preYear.getFullYear();
+    },
+
+    // 取得后一年的时间串
+    getNextYear: function(year) {
+        var thisYear = new Date(year, 5);
+        var nextYear = new Date(thisYear.valueOf() + 24 * 60 * 60 * 1000 * 365);
+        return nextYear.getFullYear();
+    },
+
+    // 取得前一月的时间串
+    getPreMonth: function(year, month) {
+        month = month - 1;
+        var thisMonth = new Date(year, month, 15);
+        var preMonth = new Date(thisMonth.valueOf() - 24 * 60 * 60 * 1000 * 30);
+        return preMonth.getMonth() + 1;
+    },
+    // 取得后一月的时间串
+    getNextMonth: function(year, month) {
+        month = month - 1;
+        var thisMonth = new Date(year, month, 15);
+        var nextMonth = new Date(thisMonth.valueOf() + 24 * 60 * 60 * 1000 * 30);
+        return nextMonth.getMonth() + 1;
+    },
+    // 判断一个月有几天
+    getMonthDate: function(year, month) {
+        month=String(month);
+        switch (month) {
+            case '1':
+            case '3':
+            case '5':
+            case '7':
+            case '8':
+            case '10':
+            case '12':
+                return 31;
+            case '4':
+            case '6':
+            case '9':
+            case '11':
+                return 30;
+            case '2':
+                if (year % 400 === 0 || year % 4 === 0 && year % 100 !== 0) {
+                    return 29;
+                } else {
+                    return 28;
+                }
+                break;
+            default:
+                console.log('月份错误');
+                break;
+        }
+    },
+};
 
 // 年，月选择框
 var yearToggle = document.querySelector("#year-show");
@@ -28,7 +166,7 @@ var monthHiddenChoose = document.querySelector(".month-hidden-choose");
 var dateContent = document.querySelector(".date-content");
 
 // 动态生成页面
-// getDateContent(fullYear,String(month));
+calendar.getDateContent(fullYear,month);
 
 document.querySelector(".container").addEventListener('click', function(event) {
     event = event ? event : window.event;
@@ -73,24 +211,24 @@ document.querySelector(".container").addEventListener('click', function(event) {
         case 'icon-circle-left year-icon':
             // textContent不支持IE678
             thisYear = yearShow.textContent;
-            yearShow.textContent = getPreYear(thisYear);
+            yearShow.textContent = calendar.getPreYear(thisYear);
             break;
             // 下一年
         case 'icon-circle-right year-icon':
             thisYear = yearShow.textContent;
-            yearShow.textContent = getNextYear(thisYear);
+            yearShow.textContent = calendar.getNextYear(thisYear);
             break;
             // 上一月
         case 'icon-circle-left month-icon':
             thisYear = yearShow.textContent;
             thisMonth = monthShow.textContent;
-            monthShow.textContent = getPreMonth(thisYear, thisMonth);
+            monthShow.textContent = calendar.getPreMonth(thisYear, thisMonth);
             break;
             // 下一月
         case 'icon-circle-right month-icon':
             thisYear = yearShow.textContent;
             thisMonth = monthShow.textContent;
-            monthShow.textContent = getNextMonth(thisYear, thisMonth);
+            monthShow.textContent = calendar.getNextMonth(thisYear, thisMonth);
             break;
             // 点击年选择框，完成选择
         case 'year-choose-item':
@@ -118,137 +256,9 @@ document.querySelector(".container").addEventListener('click', function(event) {
         case 'year-choose-item':
             // 点击月选择框，完成选择
         case 'month-choose-item':
-            getDateContent(yearShow.textContent, monthShow.textContent);
+            calendar.getDateContent(yearShow.textContent, monthShow.textContent);
             break;
         default:
             break;
     }
 });
-
-// 生成当前月份
-function getDateContent(year, month) {
-    var j;
-    var dayChosen = new Date(year, month - 1, 1);
-    var weekIndex = dayChosen.getDay();
-
-    var dayChosenBefore = new Date(dayChosen.valueOf() - 24 * 60 * 60 * 1000 * weekIndex);
-    // 删除子节点
-    for (i = dateContent.childNodes.length - 1; i > 0; i--) {
-        dateContent.removeChild(dateContent.childNodes[i]);
-    }
-    var newDateContentItem, newDateContentItemNum;
-    var dayTemp = new Date(dayChosenBefore.valueOf());
-    // 重新生成子节点 上一月
-    for (j = 0; j < weekIndex; j++) {
-        // 先创建 li
-        newDateContentItem = document.createElement('li');
-        newDateContentItem.className = "date-content-item not-this-month";
-        dateContent.appendChild(newDateContentItem);
-        // 再创建 p
-        newDateContentItemNum = document.createElement('p');
-        if (dayTemp.getDay() === 0 || dayTemp.getDay() === 6) {
-            newDateContentItemNum.className = "num weekend";
-        } else {
-            newDateContentItemNum.className = "num";
-        }
-        newDateContentItemNum.textContent = dayTemp.getDate();
-        newDateContentItem.appendChild(newDateContentItemNum);
-        dayTemp = new Date(dayTemp.valueOf() + 24 * 60 * 60 * 1000);
-    }
-    // 重新生成子节点 本月
-    dayTemp = new Date(dayChosen.valueOf());
-    for (j = 0; j < getMonthDate(year, month); j++) {
-        newDateContentItem = document.createElement('li');
-        newDateContentItem.className = "date-content-item";
-        dateContent.appendChild(newDateContentItem);
-
-        newDateContentItemNum = document.createElement('p');
-        if (dayTemp.getDay() === 0 || dayTemp.getDay() === 6) {
-            newDateContentItemNum.className = "num weekend";
-        } else {
-            newDateContentItemNum.className = "num";
-        }
-        newDateContentItemNum.textContent = dayTemp.getDate();
-        newDateContentItem.appendChild(newDateContentItemNum);
-
-        dayTemp = new Date(dayTemp.valueOf() + 24 * 60 * 60 * 1000);
-    }
-    // 重新生成子节点 下月
-    dayTemp = new Date(dayChosen.valueOf() + 24 * 60 * 60 * 1000 * getMonthDate(year, month));
-    for (j = 0; j < 42 - weekIndex - getMonthDate(year, month); j++) {
-        newDateContentItem = document.createElement('li');
-        newDateContentItem.className = "date-content-item not-this-month";
-        dateContent.appendChild(newDateContentItem);
-
-        newDateContentItemNum = document.createElement('p');
-        if (dayTemp.getDay() === 0 || dayTemp.getDay() === 6) {
-            newDateContentItemNum.className = "num weekend";
-        } else {
-            newDateContentItemNum.className = "num";
-        }
-        newDateContentItemNum.textContent = dayTemp.getDate();
-        newDateContentItem.appendChild(newDateContentItemNum);
-        dayTemp = new Date(dayTemp.valueOf() + 24 * 60 * 60 * 1000);
-    }
-
-
-}
-
-// 全局函数-取得前一年的时间串
-
-function getPreYear(year) {
-    var thisYear = new Date(year, 5);
-    var preYear = new Date(thisYear.valueOf() - 24 * 60 * 60 * 1000 * 365);
-    return preYear.getFullYear();
-}
-
-// 全局函数-取得后一年的时间串
-
-function getNextYear(year) {
-    var thisYear = new Date(year, 5);
-    var nextYear = new Date(thisYear.valueOf() + 24 * 60 * 60 * 1000 * 365);
-    return nextYear.getFullYear();
-}
-
-// 全局函数-取得前一月的时间串
-function getPreMonth(year, month) {
-    month = month - 1;
-    var thisMonth = new Date(year, month, 15);
-    var preMonth = new Date(thisMonth.valueOf() - 24 * 60 * 60 * 1000 * 30);
-    return preMonth.getMonth() + 1;
-}
-// 全局函数-取得后一月的时间串
-function getNextMonth(year, month) {
-    month = month - 1;
-    var thisMonth = new Date(year, month, 15);
-    var nextMonth = new Date(thisMonth.valueOf() + 24 * 60 * 60 * 1000 * 30);
-    return nextMonth.getMonth() + 1;
-}
-// 全局函数 判断一个月有几天
-function getMonthDate(year, month) {
-    switch (month) {
-        case '1':
-        case '3':
-        case '5':
-        case '7':
-        case '8':
-        case '10':
-        case '12':
-            return 31;
-        case '4':
-        case '6':
-        case '9':
-        case '11':
-            return 30;
-        case '2':
-            if (year % 400 === 0 || year % 4 === 0 && year % 100 !== 0) {
-                return 29;
-            } else {
-                return 28;
-            }
-            break;
-        default:
-            console.log('月份错误');
-            break;
-    }
-}
