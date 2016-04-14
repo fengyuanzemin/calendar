@@ -8,14 +8,16 @@ var calendar = {
         '廿二', '廿三', '廿四', '廿五', '廿六', '廿七', '廿八', '廿九', '三十'
     ],
     // 天干
-    heavenlyStems:["甲","乙","丙","丁","戊","己","庚","辛","壬","癸"],
+    heavenlyStems: ["甲", "乙", "丙", "丁", "戊", "己", "庚", "辛", "壬", "癸"],
     //地支
-    earthlyBranches:["子","丑","寅","卯","辰","巳","午","未","申","酉","戌","亥"],
+    earthlyBranches: ["子", "丑", "寅", "卯", "辰", "巳", "午", "未", "申", "酉", "戌", "亥"],
     // 生肖表
-    animals:["鼠","牛","虎","兔","龙","蛇","马","羊","猴","鸡","狗","猪"],
+    animals: ["鼠", "牛", "虎", "兔", "龙", "蛇", "马", "羊", "猴", "鸡", "狗", "猪"],
     // 24节气
-    solarTerms:["小寒","大寒","立春","雨水","惊蛰","春分","清明","谷雨","立夏","小满",
-        "芒种","夏至","小暑","大暑","立秋","处暑","白露","秋分","寒露","霜降","立冬","小雪","大雪","冬至"],
+    solarTerms: ["小寒", "大寒", "立春", "雨水", "惊蛰", "春分", "清明", "谷雨", "立夏", "小满",
+        "芒种", "夏至", "小暑", "大暑", "立秋", "处暑", "白露", "秋分", "寒露", "霜降", "立冬", "小雪", "大雪", "冬至"
+    ],
+
     // 获取当前时间
     getDate: function() {
         var today = new Date();
@@ -25,8 +27,20 @@ var calendar = {
         var day = this.weekStringZH_CNThree[today.getDay()];
         var todayDate = fullYear + "年" + month + "月" + date + "日" + day;
         console.log("今天日期是：" + todayDate);
+        return todayDate;
     },
-
+    // 获取当前月份，不知道冗余不冗余
+    getMonth: function() {
+        var today = new Date();
+        var month = today.getMonth() + 1;
+        return month;
+    },
+    // 获取当前月份，不知道冗余不冗余
+    getYear: function() {
+        var today = new Date();
+        var year = today.getFullYear();
+        return year;
+    },
     // 生成当前月份
     getDateContent: function(year, month) {
         var j;
@@ -126,7 +140,7 @@ var calendar = {
     },
     // 判断一个月有几天
     getMonthDate: function(year, month) {
-        month=String(month);
+        month = String(month);
         switch (month) {
             case '1':
             case '3':
@@ -166,7 +180,7 @@ var monthHiddenChoose = document.querySelector(".month-hidden-choose");
 var dateContent = document.querySelector(".date-content");
 
 // 动态生成页面
-calendar.getDateContent(fullYear,month);
+// calendar.getDateContent(calendar.getYear(),calendar.getMonth());
 
 document.querySelector(".container").addEventListener('click', function(event) {
     event = event ? event : window.event;
