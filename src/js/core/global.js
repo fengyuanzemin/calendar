@@ -136,44 +136,58 @@ function getDateContent(year, month) {
     for (i = dateContent.childNodes.length - 1; i > 0; i--) {
         dateContent.removeChild(dateContent.childNodes[i]);
     }
-    var newDateContentItem;
+    var newDateContentItem, newDateContentItemNum;
     var dayTemp = new Date(dayChosenBefore.valueOf());
     // 重新生成子节点 上一月
     for (j = 0; j < weekIndex; j++) {
+        // 先创建 li
         newDateContentItem = document.createElement('li');
-        newDateContentItem.innerHTML = dayTemp.getDate();
-        if (dayTemp.getDay() === 0 || dayTemp.getDay() === 6) {
-            newDateContentItem.className = "date-content-item not-this-month weekend";
-        } else {
-            newDateContentItem.className = "date-content-item not-this-month";
-        }
+        newDateContentItem.className = "date-content-item not-this-month";
         dateContent.appendChild(newDateContentItem);
+        // 再创建 p
+        newDateContentItemNum = document.createElement('p');
+        if (dayTemp.getDay() === 0 || dayTemp.getDay() === 6) {
+            newDateContentItemNum.className = "num weekend";
+        } else {
+            newDateContentItemNum.className = "num";
+        }
+        newDateContentItemNum.textContent = dayTemp.getDate();
+        newDateContentItem.appendChild(newDateContentItemNum);
         dayTemp = new Date(dayTemp.valueOf() + 24 * 60 * 60 * 1000);
     }
     // 重新生成子节点 本月
     dayTemp = new Date(dayChosen.valueOf());
     for (j = 0; j < getMonthDate(year, month); j++) {
         newDateContentItem = document.createElement('li');
-        newDateContentItem.textContent = dayTemp.getDate();
-        if(dayTemp.getDay() === 0 || dayTemp.getDay() === 6){
-            newDateContentItem.className = "date-content-item weekend";
-        }else {
-            newDateContentItem.className = "date-content-item";
-        }
+        newDateContentItem.className = "date-content-item";
         dateContent.appendChild(newDateContentItem);
+
+        newDateContentItemNum = document.createElement('p');
+        if (dayTemp.getDay() === 0 || dayTemp.getDay() === 6) {
+            newDateContentItemNum.className = "num weekend";
+        } else {
+            newDateContentItemNum.className = "num";
+        }
+        newDateContentItemNum.textContent = dayTemp.getDate();
+        newDateContentItem.appendChild(newDateContentItemNum);
+
         dayTemp = new Date(dayTemp.valueOf() + 24 * 60 * 60 * 1000);
     }
     // 重新生成子节点 下月
     dayTemp = new Date(dayChosen.valueOf() + 24 * 60 * 60 * 1000 * getMonthDate(year, month));
     for (j = 0; j < 42 - weekIndex - getMonthDate(year, month); j++) {
         newDateContentItem = document.createElement('li');
-        newDateContentItem.innerHTML = dayTemp.getDate();
-        if (dayTemp.getDay() === 0 || dayTemp.getDay() === 6) {
-            newDateContentItem.className = "date-content-item not-this-month weekend";
-        } else {
-            newDateContentItem.className = "date-content-item not-this-month";
-        }
+        newDateContentItem.className = "date-content-item not-this-month";
         dateContent.appendChild(newDateContentItem);
+
+        newDateContentItemNum = document.createElement('p');
+        if (dayTemp.getDay() === 0 || dayTemp.getDay() === 6) {
+            newDateContentItemNum.className = "num weekend";
+        } else {
+            newDateContentItemNum.className = "num";
+        }
+        newDateContentItemNum.textContent = dayTemp.getDate();
+        newDateContentItem.appendChild(newDateContentItemNum);
         dayTemp = new Date(dayTemp.valueOf() + 24 * 60 * 60 * 1000);
     }
 
