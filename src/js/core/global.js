@@ -27,7 +27,8 @@ var monthHiddenChoose = document.querySelector(".month-hidden-choose");
 
 var dateContent = document.querySelector(".date-content");
 
-getDateContent(fullYear,String(month));
+// 动态生成页面
+// getDateContent(fullYear,String(month));
 
 document.querySelector(".container").addEventListener('click', function(event) {
     event = event ? event : window.event;
@@ -73,39 +74,33 @@ document.querySelector(".container").addEventListener('click', function(event) {
             // textContent不支持IE678
             thisYear = yearShow.textContent;
             yearShow.textContent = getPreYear(thisYear);
-            // setTimeout(getDateContent(yearShow.textContent, monthShow.textContent), 100);
             break;
             // 下一年
         case 'icon-circle-right year-icon':
             thisYear = yearShow.textContent;
             yearShow.textContent = getNextYear(thisYear);
-            // setTimeout(getDateContent(yearShow.textContent, monthShow.textContent), 100);
             break;
             // 上一月
         case 'icon-circle-left month-icon':
             thisYear = yearShow.textContent;
             thisMonth = monthShow.textContent;
             monthShow.textContent = getPreMonth(thisYear, thisMonth);
-            // setTimeout(getDateContent(yearShow.textContent, monthShow.textContent), 100);
             break;
             // 下一月
         case 'icon-circle-right month-icon':
             thisYear = yearShow.textContent;
             thisMonth = monthShow.textContent;
             monthShow.textContent = getNextMonth(thisYear, thisMonth);
-            // setTimeout(getDateContent(yearShow.textContent, monthShow.textContent), 100);
             break;
             // 点击年选择框，完成选择
         case 'year-choose-item':
             yearShow.textContent = target.textContent.replace(/[^0-9]/ig, "");
             yearHiddenChoose.style.display = 'none';
-            // setTimeout(getDateContent(yearShow.textContent, monthShow.textContent), 100);
             break;
             // 点击月选择框，完成选择
         case 'month-choose-item':
             monthShow.textContent = target.textContent.replace(/[^0-9]/ig, "");
             monthHiddenChoose.style.display = 'none';
-            // setTimeout(getDateContent(yearShow.textContent, monthShow.textContent), 100);
             break;
         default:
             break;
@@ -159,8 +154,12 @@ function getDateContent(year, month) {
     dayTemp = new Date(dayChosen.valueOf());
     for (j = 0; j < getMonthDate(year, month); j++) {
         newDateContentItem = document.createElement('li');
-        newDateContentItem.innerHTML = dayTemp.getDate();
-        newDateContentItem.className = "date-content-item";
+        newDateContentItem.textContent = dayTemp.getDate();
+        if(dayTemp.getDay() === 0 || dayTemp.getDay() === 6){
+            newDateContentItem.className = "date-content-item weekend";
+        }else {
+            newDateContentItem.className = "date-content-item";
+        }
         dateContent.appendChild(newDateContentItem);
         dayTemp = new Date(dayTemp.valueOf() + 24 * 60 * 60 * 1000);
     }

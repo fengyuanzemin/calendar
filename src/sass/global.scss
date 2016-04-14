@@ -13,7 +13,7 @@ $calendar-color:#FFFFCC;
 }
 
 $date-height:400px;
-$date-width:330px;
+$date-width:380px;
 .calendar-container {
     width: $date-width;
     height: $date-height;
@@ -98,10 +98,23 @@ $date-item-height:$date-content-height/6;
     width: $date-item-width;
     height: $date-item-height;
     text-align: center;
-    line-height: 3;
     cursor: pointer;
 }
-
+.date-title-item{
+    line-height: 3;
+}
+$lunar-font-color:#999;
+.date-content-item{
+    line-height: 1.6;
+    .num{
+        font-size: 18px;
+        font-weight: bold;
+    }
+    .lunar{
+        color:$lunar-font-color;
+        font-size:13px
+    }
+}
 .date-content {
     width: $date-width;
     height: $date-content-height;
@@ -111,10 +124,9 @@ $date-item-height:$date-content-height/6;
 
 // 不是本月的日期
 .not-this-month {
-    opacity: 0.6;
+    opacity: 0.7;
     background-color: #eeeeee;
 }
-
 // 节假日颜色
 $weekend-color:#e02d2d;
 .weekend {
