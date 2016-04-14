@@ -27,6 +27,7 @@ var monthHiddenChoose = document.querySelector(".month-hidden-choose");
 
 var dateContent = document.querySelector(".date-content");
 
+getDateContent(fullYear,String(month));
 
 document.querySelector(".container").addEventListener('click', function(event) {
     event = event ? event : window.event;
